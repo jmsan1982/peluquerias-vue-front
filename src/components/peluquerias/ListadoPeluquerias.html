@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="row justify-content-center" style="margin-left: 10px">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3 text-center">
+                <a class="nav-link text-light text-center" href="">
+                    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                        <div class="card-body">
+                            <router-link :to="{name: 'nuevaPeluqueria'}">Añadir Peluqueria</router-link>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-sm-12 col-lg-12 center">
+                <table class="table table-bordered table-sm mb-0 text-center " id="tabla_peluquerias">
+                    <thead>
+                    <tr class="text-info">
+                        <th scope="col" class="text-center"><b>Modificar/Eliminar</b></th>
+                        <th scope="col" class="text-center"><b>Nombre</b></th>
+                        <!--@if(!isset($all))-->
+                        <th scope="col" class="text-center"><b>Dirección</b></th>
+                        <!--@endif-->
+                        <th scope="col" class="text-center"><b>Telefono</b></th>
+                        <!--@if(isset($all) && $all)-->
+                        <th scope="col" class="text-center"><b>Población</b></th>
+                        <!--@endif-->
+                        <th scope="col" class="text-center"><b>Ultima Visita</b></th>
+                        <th scope="col" class="text-center"><b>Actualizar Visita / Visivilidad</b></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="peluqueria in peluquerias" :key="peluqueria.id">
+                        <td>
+                            <router-link :to="{name: 'editarPeluqueria', params: {id: peluqueria.id}}">Modificar</router-link>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn-danger" @click="deletePeluqueria(peluqueria.id)">Eliminar</a>
+                        </td>
+
+                        <td>
+                            <a :class="{
+                                    interesagreen: peluqueria.interesa > 0,
+                                    interesared: peluqueria.interesa < 1
+                                }">
+                                <router-link :to="{name: 'peluqueria', params: {id: peluqueria.id}}">{{peluqueria.nombre}}</router-link>
+                            </a>
+                        </td>
+                        <!-- @if(!isset($all))-->
+                        <td>{{peluqueria.direccion}}</td>
+                        <!--@endif-->
+                        <td>{{peluqueria.telefono}}</td>
+                        <!--@if(isset($all) && $all)-->
+                        <td><!--{{$peluqueria->municipio->nombre}}--></td>
+                        <!--@endif-->
+                        <!--f.getDate() + "-"+ f.getMonth()+ "-" +f.getFullYear()-->
+                        <td v-if="peluqueria.ultima_visita !== null || peluqueria.ultima_visita !== undefined">{{peluqueria.ultima_visita}}</td>
+                        <td v-else></td>
+                        <td>
+                            Actualizar
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            Visivilidad
+                            <!--<i class="iVisitaPlus fas fa-calendar-plus fa-2x" style="margin-right: 10px;" onclick="actualizarFecha({{$peluqueria->id}})"></i>
+                            <i class="visivilidad fas fa-paint-brush fa-2x" onclick="actualizarInteresa({{$peluqueria->id}})"></i>-->
+                        </td>
+                    </tr>
+                    <!--@endforeach-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br/><br/>
+        <div class="row">
+            <div class="col-sm-6 col-lg-3 text-center mt-4">
+                <div class="card text-white bg-success text-center">
+                    <div class="card-body pb-0">
+                        <a class="nav-link text-light text-center" href="javascript:history.go(-1)"><i
+                                class="fas fa-arrow-circle-left fa-2x text-light">
+                        </i> </a>
+                        <p class="text-light text-center">Volver Atras</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

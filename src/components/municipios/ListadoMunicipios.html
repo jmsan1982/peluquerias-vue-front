@@ -1,0 +1,12 @@
+<section id="municipios-container">
+    <div id="listadoMunicipios" v-if="municipios && municipios.length > 0">
+        <div class="row justify-content-center" style="margin-left: 10px">
+            <div class="col-md-4 col-sm-4 col-xs-4 mt-2" v-for="municipio in municipios" :key="municipio.id_municipio">
+                <router-link :to="{name: 'peluqueriasMunicipio', params: {id: municipio.id_municipio}}">{{municipio.nombre}}</router-link>
+            </div>
+        </div>
+    </div>
+    <div class="center" v-else>
+        <img src="../../assets/cargando.gif" />
+    </div>
+</section>

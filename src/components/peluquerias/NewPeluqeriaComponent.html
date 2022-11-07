@@ -1,0 +1,184 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-success text-white text-center" v-if="!isEdit"><h5>Nueva Peluqueria</h5></div>
+                    <div class="card-header bg-success text-white text-center" v-else><h5>Editar Peluqueria</h5></div>
+
+                    <div class="card-body bg-light">
+<!--                        <form class="mid-form" method="PUT" @submit.prevent="edit()" v-if="peluqueria.nombre">-->
+                        <form class="mid-form" @submit.prevent="savePeluqueria()">
+                            <div class="form-group row">
+                                <label for="nombreMunicipio"
+                                       class="col-md-4 col-form-label text-md-right">Municipio</label>
+
+                                <div class="col-md-6">
+                                    <select id="nombreMunicipio"
+                                            class="form-control"
+                                            name="nombreMunicipio" autofocus v-if="municipios && municipios.length > 0" v-model="peluqueria.idMunicipio">
+                                            <option v-for="municipio in municipios" :key="municipio.id_municipio" :value="municipio.id_municipio">{{municipio.nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label for="nombrePeluqueria" class="col-md-4 col-form-label text-md-right">Nombre
+                                    Peluqueria</label>
+
+                                <div class="col-md-6">
+                                    <input id="nombrePeluqueria" type="text"
+                                           class="form-control"
+                                           name="nombrePeluqueria" autocomplete="nombrePeluqueria"
+                                           v-model="peluqueria.nombrePeluqueria">
+                                    <div style="color: red" v-if="inputRequired && v$.peluqueria.nombrePeluqueria.required">El nombre no puede estar vacio</div>
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nombreContacto" class="col-md-4 col-form-label text-md-right">Nombre
+                                    Contacto</label>
+
+                                <div class="col-md-6">
+                                    <input id="nombreContacto" type="text"
+                                           class="form-control"
+                                           name="nombreContacto" autocomplete="nombreContacto"
+                                           v-model="peluqueria.nombreContacto">
+                                    <div style="color: red" v-if="inputRequired && v$.peluqueria.nombreContacto.required">El contacto no puede estar vacio</div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dni" class="col-md-4 col-form-label text-md-right">DNI / CIF</label>
+
+                                <div class="col-md-6">
+                                    <input id="dni" type="text"
+                                           class="form-control"
+                                           name="dni" autocomplete="dni"
+                                           v-model="peluqueria.dni">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nCuenta" class="col-md-4 col-form-label text-md-right">Numero de cuenta</label>
+
+                                <div class="col-md-6">
+                                    <input id="nCuenta" type="text"
+                                           class=""
+                                           name="nCuenta" autocomplete="nCuenta"
+                                           v-model="peluqueria.nCuenta">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="direccion" class="col-md-4 col-form-label text-md-right">Dirección</label>
+
+                                <div class="col-md-6">
+                                    <input id="direccion" type="text"
+                                           class="form-control"
+                                           name="direccion" autocomplete="direccion"
+                                           v-model="peluqueria.direccion">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="correo" class="col-md-4 col-form-label text-md-right">Correo</label>
+
+                                <div class="col-md-6">
+                                    <input id="correo" type="text"
+                                           class="form-control"
+                                           name="correo" autocomplete="correo"
+                                           v-model="peluqueria.correo">
+
+                                </div>
+                                <div style="color: red" v-if="inputRequired && v$.peluqueria.nombreContacto.required">El correo no puede estar vacio</div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="telefono" class="col-md-4 col-form-label text-md-right">Telefono</label>
+
+                                <div class="col-md-6">
+                                    <input id="telefono" type="text"
+                                           class="form-control"
+                                           name="telefono" autocomplete="telefono"
+                                           v-model="peluqueria.telefono">
+                                </div>
+                                <div style="color: red" v-if="inputRequired && v$.peluqueria.telefono.required">El telefono no puede estar vacio</div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="observaciones" class="col-md-4 col-form-label text-md-right">Observaciones</label>
+
+                                <div class="col-md-6">
+                                        <textarea id="observaciones" class="form-control" rows="3"
+                                                  name="observaciones"
+                                                  v-model="peluqueria.observaciones">
+                                        </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="visitas" class="col-md-4 col-form-label text-md-right">Visitas</label>
+
+                                <div class="col-md-6">
+                                    <input id="visitas" type="number"
+                                           class="form-control" name="visitas"
+                                           autocomplete="visitas"
+                                           v-model="peluqueria.visitas">
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="ultimaVisita" class="col-md-4 col-form-label text-md-right">Ultima Visita</label>
+
+                                <div class="col-md-6">
+                                    <input id="ultimaVisita" type="date"
+                                           class="form-control" name="ultimaVisita"
+                                           autocomplete="ultimaVisita"
+                                           v-model="peluqueria.ultimaVisita">
+
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="totalCobrado" class="col-md-4 col-form-label text-md-right">Total Cobrado</label>
+
+                                <div class="col-md-6">
+                                    <input id="totalCobrado" type="number"
+                                           class="form-control" name="totalCobrado"
+                                           autocomplete="totalCobrado"
+                                           v-model="peluqueria.totalCobrado">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="diaCierre"
+                                       class="col-md-4 col-form-label text-md-right">Dia de cierre</label>
+
+                                <div class="col-md-6">
+                                    <select id="diaCierre"
+                                            class="form-control"
+                                            name="diaCierre" autofocus :value="peluqueria.diaCierre">
+                                        <option value="Lunes" selected>Lunes
+                                        </option>
+                                        <option value="Martes">Martes
+                                        </option>
+                                        <option value="Miercoles">Miercoles
+                                        </option>
+                                        <option value="Jueves">Jueves
+                                        </option>
+                                        <option value="Viernes">Viernes
+                                        </option>
+                                        <option value="Sabado">Sabado
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="form-group row mb-0">
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1)"
+                                    >Atras</button>&nbsp;&nbsp;&nbsp;
+                                    <input type="submit" value="Editar" class="btn btn-success" v-if="peluqueria.nombre">
+                                    <input type="submit" value="Guardar" class="btn btn-success" v-else>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

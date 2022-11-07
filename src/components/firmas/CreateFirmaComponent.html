@@ -1,0 +1,13 @@
+<div class="container">
+    <form class="mid-form" @submit.prevent="save()">
+        <div class="form-group">
+            <label for="name">Nombre
+                Firma</label>
+            <input type="text"
+                   name="name" v-model="firma.name">
+            <div v-if="inputRequired && v$.firma.name.required">El nombre no puede estar vacio</div>
+        </div>
+        <div class="clearfix"></div>
+        <input type="submit" value="guardar" class="btn btn-success">
+    </form>
+</div>
